@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "audiobook-ai"
+version = "1.0.0"
+description = "Audiobook Generation System — trainable text-normalization + neural TTS + an agentic document→audiobook pipeline"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Le Dinh Minh Quan" }]
+keywords = ["nlp", "tts", "text-normalization", "audiobook", "byt5", "speecht5", "agent"]
+
+# Core deps only — the package, the rule normalizer, the agent (with placeholder TTS),
+# and the tests all run with just these. Heavy ML / audio / serving libs are extras,
+# imported lazily, so `pip install -e .` never forces torch and CI stays light.
+dependencies = [
+    "numpy>=1.23",
+    "pyyaml>=6.0",
+    "pydantic>=2.0",
+    "num2words>=0.5.12",
+]
+
+[project.optional-dependencies]
+ml = [
+    "torch>=2.1",
+    "transformers>=4.40",
+    "datasets>=2.18",
+    "accelerate>=0.30",
+    "sentencepiece>=0.1.99",
+    "evaluate>=0.4",
+]
+tts = [
+    "soundfile>=0.12",
+    "pydub>=0.25",
+    "pyloudnorm>=0.1.1",
+    "ebooklib>=0.18",
+    "beautifulsoup4>=4.12",
+    "pymupdf>=1.24",
+    "pdfplumber>=0.11",
+    "pysbd>=0.3.4",
+]
+api = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
+    "python-multipart>=0.0.9",
+    "gradio>=4.0",
+]
+report = [
+    "reportlab>=4.0",
+    "python-pptx>=0.6.23",
+    "matplotlib>=3.7",
+]
+dev = ["pytest>=7.4", "ruff>=0.4"]
+all = [
+    "torch>=2.1", "transformers>=4.40", "datasets>=2.18", "accelerate>=0.30",
+    "sentencepiece>=0.1.99", "evaluate>=0.4",
+    "soundfile>=0.12", "pydub>=0.25", "pyloudnorm>=0.1.1", "ebooklib>=0.18",
+    "beautifulsoup4>=4.12", "pymupdf>=1.24", "pdfplumber>=0.11", "pysbd>=0.3.4",
+    "fastapi>=0.110", "uvicorn[standard]>=0.29", "python-multipart>=0.0.9", "gradio>=4.0",
+    "reportlab>=4.0", "python-pptx>=0.6.23", "matplotlib>=3.7",
+]
+
+[project.scripts]
+audiobook-ai = "audiobook_ai.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+audiobook_ai = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"

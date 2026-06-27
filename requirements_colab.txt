@@ -1,0 +1,31 @@
+# Colab-safe dependencies. IMPORTANT: do NOT list torch here — Colab ships a CUDA
+# build of torch already, and reinstalling it breaks the runtime. The notebook
+# installs these, then `pip install -e . --no-deps`.
+
+transformers>=4.40
+datasets>=2.18
+accelerate>=0.30
+sentencepiece>=0.1.99
+evaluate>=0.4
+
+num2words>=0.5.12
+soundfile>=0.12
+pydub>=0.25
+pyloudnorm>=0.1.1
+ebooklib>=0.18
+beautifulsoup4>=4.12
+pymupdf>=1.24
+pdfplumber>=0.11
+pysbd>=0.3.4
+
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+gradio>=4.0
+
+reportlab>=4.0
+python-pptx>=0.6.23
+matplotlib>=3.7
+
+# optional higher-quality TTS backend (Apache-2.0); uncomment to use --backend kokoro
+# kokoro>=0.9.4

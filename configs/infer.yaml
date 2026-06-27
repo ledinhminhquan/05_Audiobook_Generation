@@ -1,0 +1,39 @@
+# Inference / serving config. Loaded via `audiobook-ai --config configs/infer.yaml serve`.
+project_title: Audiobook Generation System
+author: Le Dinh Minh Quan
+
+tts:
+  backend: auto                 # auto | speecht5 | kokoro | parler | pyttsx3 | placeholder
+  sample_rate: 16000            # SpeechT5 native
+  max_chars_per_chunk: 480
+  narrator_voice: narrator
+  dialogue_voice: dialogue
+  heading_voice: heading
+
+audio:
+  output_formats: [wav, mp3]
+  make_m4b: true
+  target_lufs: -18.0            # ACX/Audible (-16 = podcast)
+  peak_dbfs: -3.0
+  sentence_gap_ms: 250
+  paragraph_gap_ms: 600
+  chapter_gap_ms: 1200
+  subtitles: true
+  subtitle_format: srt
+
+parse:
+  max_chars_per_segment: 480
+  min_chars_per_segment: 40
+  segmenter: auto
+
+agent:
+  norm_confidence_min: 0.55
+  max_resynth_attempts: 2
+  audio_min_dur_ratio: 0.35
+  audio_max_dur_ratio: 3.0
+  llm_fallback_enabled: false   # set true + AUDIOBOOK_AI_LLM_API_KEY to enable the LLM brain
+  llm_model: claude-haiku-4-5-20251001
+
+serving:
+  model_version: v1
+  max_chars: 400000

@@ -1,0 +1,38 @@
+# Training config for the ByT5/T5 Text-Normalization model.
+# Loaded via `audiobook-ai --config configs/train.yaml train`. Unknown keys are ignored.
+project_title: Audiobook Generation System
+author: Le Dinh Minh Quan
+student_id: "23127460"
+
+data:
+  synthetic_train_size: 60000
+  synthetic_val_size: 4000
+  synthetic_test_size: 4000
+  hard_slice_size: 1500
+  max_chars: 360
+  seed: 42
+  # hf_tn_dataset: ""            # optional: mix in a real (written, spoken) TN dataset
+
+model:
+  base_model: google/byt5-small        # small-GPU fallback: google-t5/t5-small
+  task_prefix: "normalize: "
+  max_source_length: 384
+  max_target_length: 384
+  num_train_epochs: 3
+  learning_rate: 5.0e-4                 # t5-small: use ~3.0e-4
+  per_device_train_batch_size: 32
+  per_device_eval_batch_size: 64
+  gradient_accumulation_steps: 8        # effective batch 256 on H100
+  warmup_ratio: 0.05
+  weight_decay: 0.01
+  label_smoothing_factor: 0.1
+  dropout_rate: 0.1
+  early_stopping_patience: 4
+  eval_steps: 500
+  save_steps: 500
+  bf16: true
+  fp16: false
+  tf32: true
+  gradient_checkpointing: false         # auto GPU profile turns this on for smaller GPUs
+  group_by_length: true
+  seed: 42

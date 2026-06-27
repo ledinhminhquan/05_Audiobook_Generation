@@ -1,0 +1,43 @@
+# Full local/dev install (everything). For a minimal core install use `pip install -e .`
+# and add extras as needed: `.[ml]`, `.[tts]`, `.[api]`, `.[report]`, or `.[all]`.
+
+# ── core ─────────────────────────────────────────────────────────────────────
+numpy>=1.23
+pyyaml>=6.0
+pydantic>=2.0
+num2words>=0.5.12
+
+# ── trainable model (ByT5/T5 Text-Normalization) ────────────────────────────
+torch>=2.1
+transformers>=4.40
+datasets>=2.18
+accelerate>=0.30
+sentencepiece>=0.1.99
+evaluate>=0.4
+
+# ── TTS + audio + document parsing ──────────────────────────────────────────
+soundfile>=0.12
+pydub>=0.25
+pyloudnorm>=0.1.1
+ebooklib>=0.18
+beautifulsoup4>=4.12
+pymupdf>=1.24
+pdfplumber>=0.11
+pysbd>=0.3.4
+
+# ── serving (API + UI) ──────────────────────────────────────────────────────
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+gradio>=4.0
+
+# ── reporting (auto report.pdf + slides.pptx) ───────────────────────────────
+reportlab>=4.0
+python-pptx>=0.6.23
+matplotlib>=3.7
+
+# ── optional higher-quality TTS backends (uncomment to enable) ──────────────
+# kokoro>=0.9.4            # hexgrad/Kokoro-82M (Apache-2.0, 24 kHz)
+# parler-tts                # parler-tts/parler-tts-mini-v1 (Apache-2.0)
+# pyttsx3>=2.90             # offline OS TTS fallback
+# anthropic>=0.39           # optional LLM reasoning brain for the agent

@@ -1,0 +1,26 @@
+services:
+  audiobook-ai:
+    build: .
+    image: audiobook-ai:latest
+    ports:
+      - "7860:7860"
+    environment:
+      AUDIOBOOK_AI_ARTIFACTS_DIR: /artifacts
+      AUDIOBOOK_AI_TTS_BACKEND: auto
+      HF_HOME: /root/.cache/huggingface
+      # AUDIOBOOK_AI_LLM_API_KEY: ${ANTHROPIC_API_KEY}   # optional LLM brain
+    volumes:
+      - ./artifacts:/artifacts
+      - hf_cache:/root/.cache/huggingface
+    command: uvicorn audiobook_ai.api.app_combined:app --host 0.0.0.0 --port 7860
+    # For GPU synthesis/training, uncomment (needs nvidia-container-toolkit + a CUDA image):
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+volumes:
+  hf_cache:
